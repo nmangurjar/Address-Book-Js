@@ -1,5 +1,10 @@
 package com.addressbook.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class AddressBook {
     private Long id;
     private String name;
@@ -11,21 +16,5 @@ public class AddressBook {
         this.name = name;
         this.email = email;
         this.phone = phone;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhone() {
-        return phone;
     }
 }

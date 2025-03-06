@@ -7,13 +7,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/address")
 @Slf4j
+@Validated
 public class AddressBookController {
 
     @Autowired
@@ -27,15 +31,14 @@ public class AddressBookController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addContact(@RequestBody AddressBookDTO addressBookDTO) {
+    public ResponseEntity<String> addContact(@Valid @RequestBody AddressBookDTO addressBookDTO) {
         log.info("Adding new contact: {}", addressBookDTO.getName());
         String response = addressBookService.addContact(addressBookDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateContact(@PathVariable Long id, @RequestBody AddressBookDTO addressBookDTO) {
+    public ResponseEntity<String> updateContact(@PathVariable Long id, @Valid @RequestBody AddressBookDTO addressBookDTO) {
         log.info("Updating contact with ID: {}", id);
         String response = addressBookService.updateContact(id, addressBookDTO);
         return new ResponseEntity<>(response, HttpStatus.OK);

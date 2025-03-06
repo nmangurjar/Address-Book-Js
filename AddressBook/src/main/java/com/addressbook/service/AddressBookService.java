@@ -2,11 +2,13 @@ package com.addressbook.service;
 
 import com.addressbook.dto.AddressBookDTO;
 import com.addressbook.model.AddressBook;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 @Service
+@Slf4j
 public class AddressBookService {
 
     private List<AddressBook> contactList = new ArrayList<>();

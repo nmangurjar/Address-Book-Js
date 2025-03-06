@@ -29,7 +29,12 @@ public class AddressBookController {
         List<AddressBook> addressList = addressBookService.getAllContacts();
         return new ResponseEntity<>(addressList, HttpStatus.OK);
     }
-
+    @GetMapping("/{id}")
+    public ResponseEntity<AddressBook> getContactById(@PathVariable Long id) {
+        log.info("Fetching Contact with ID: {}", id);
+        AddressBook contact = addressBookService.getContactById(id);
+        return new ResponseEntity<>(contact, HttpStatus.OK);
+    }
     @PostMapping
     public ResponseEntity<String> addContact(@Valid @RequestBody AddressBookDTO addressBookDTO) {
         log.info("Adding new contact: {}", addressBookDTO.getName());

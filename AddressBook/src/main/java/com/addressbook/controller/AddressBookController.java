@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/address")
 public class AddressBookController {
@@ -16,9 +18,9 @@ public class AddressBookController {
     private AddressBookService addressBookService;
 
     @GetMapping
-    public ResponseEntity<AddressBook> getEmployees() {
-        AddressBook address = addressBookService.getContact();
-        return new ResponseEntity<>(address, HttpStatus.OK);
+    public ResponseEntity<List<AddressBook>> getEmployees() {
+        List<AddressBook> addressList = addressBookService.getAllContacts();
+        return new ResponseEntity<>(addressList, HttpStatus.OK);
     }
 
     @PostMapping

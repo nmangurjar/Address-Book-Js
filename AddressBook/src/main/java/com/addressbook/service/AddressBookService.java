@@ -4,23 +4,43 @@ import com.addressbook.dto.AddressBookDTO;
 import com.addressbook.model.AddressBook;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 @Service
 public class AddressBookService {
 
-    public AddressBook getContact() {
-        return new AddressBook(1L, "John Doe", "john.doe@gmail.com", "1234567890");
+    private List<AddressBook> contactList = new ArrayList<>();
+    private Long idCounter = 1L;
+
+    public List<AddressBook> getAllContacts() {
+        return contactList;
     }
 
     public String addContact(AddressBookDTO addressBookDTO) {
-        return "Contact Added: " + addressBookDTO.getName();
+        AddressBook newContact = new AddressBook(idCounter++, addressBookDTO.getName(), addressBookDTO.getEmail(), addressBookDTO.getPhone());
+        contactList.add(newContact);
+        return "Contact Added: " + newContact.getName();
     }
 
     public String updateContact(Long id, AddressBookDTO addressBookDTO) {
-        return "Updated Contact: " + addressBookDTO.getName() + " with ID: " + id;
+        for (AddressBook contact : contactList) {
+            if (contact.getId().equals(id)) {
+                contactList.remove(contact);
+                AddressBook updatedContact = new AddressBook(id, addressBookDTO.getName(), addressBookDTO.getEmail(), addressBookDTO.getPhone());
+                contactList.add(updatedContact);
+                return "Updated Contact: " + updatedContact.getName() + " with ID: " + id;
+            }
+        }
+        return "Contact Not Found with ID: " + id;
     }
 
     public String deleteContact(Long id) {
-        return "This is DELETE Mapping for contact: " + id;
+        for (AddressBook contact : contactList) {
+            if (contact.getId().equals(id)) {
+                contactList.remove(contact);
+                return "Deleted Contact with ID: " + id;
+            }
+        }
+        return "Contact Not Found with ID: " + id;
     }
 }
-
